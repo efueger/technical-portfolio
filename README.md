@@ -65,4 +65,4 @@ Beyond technical skills, I focus on change enablement and executive communicatio
 
 ---
 
-*This portfolio is actively maintained as I continue building my solutions engineering expertise.*
+*This portfolio is actively maintained as I continue building my solutions engineering portfolio.*
