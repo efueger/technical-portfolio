@@ -43,6 +43,14 @@ I hold AWS Cloud Practitioner (CLF-C02) and Azure AI Fundamentals (AI-900) certi
 ### 🔌 API Integration
 - *Coming soon: REST API troubleshooting guide with common patterns*
 
+## Projects
+
+### Meal Planning POC
+A simple web app to display weekly meal plans without Google Drive login.
+- **Tech Stack**: HTML/CSS/JavaScript, JSON, GitHub Pages
+- **Live Demo**: https://efueger.github.io/meal-planning-poc/
+- **Code**: https://github.com/efueger/meal-planning-poc
+
 ## Frameworks & Methodologies
 
 Beyond technical skills, I focus on change enablement and executive communication:
