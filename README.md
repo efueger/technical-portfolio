@@ -1,4 +1,9 @@
-# Solutions Engineering Portfolio
+# Technical Portfolio
+
+![GitHub last commit](https://img.shields.io/github/last-commit/efueger/technical-portfolio)
+![GitHub language count](https://img.shields.io/github/languages/count/efueger/technical-portfolio)
+![GitHub top language](https://img.shields.io/github/languages/top/efueger/technical-portfolio)
+
 
 **Emily Fueger** | [LinkedIn](https://linkedin.com/in/emilyfueger)
 
