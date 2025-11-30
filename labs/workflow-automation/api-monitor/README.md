@@ -17,7 +17,8 @@ This workflow demonstrates scheduled execution, parallel API calls, and conditio
 
 ## Workflow Architecture
 
-![Workflow Screenshot](https://claude.ai/chat/screenshot.png)
+<img width="3014" height="1892" alt="API Monitor - workflow structure" src="https://github.com/user-attachments/assets/bf00f5f8-ae90-45c9-ad8a-2c484d54c1d6" />
+
 
 ### Nodes
 
