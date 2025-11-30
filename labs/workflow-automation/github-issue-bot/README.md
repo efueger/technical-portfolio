@@ -16,7 +16,8 @@ This workflow demonstrates webhook-triggered automation, data extraction, smart 
 
 ## Workflow Architecture
 
-![Workflow Screenshot](./screenshot.png)
+<img width="3010" height="1816" alt="GitHub Issue Bot" src="https://github.com/user-attachments/assets/d21b1053-9e2d-494e-8279-90e1b368b7be" />
+
 
 ### Nodes
 
