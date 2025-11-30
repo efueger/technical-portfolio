@@ -127,33 +127,6 @@ Working with n8n taught me:
 
 ---
 
-## Interview Talking Points
-
-"I built workflow automation demos using n8n to understand how modern automation platforms work. I created an API monitoring system with parallel execution and conditional alerting, and an event-driven issue triage bot that categorizes and routes based on content analysis.
-
-These workflows demonstrate patterns used in security incident response and operations automation - webhook triggers, API enrichment, intelligent categorization, and automated routing. I understand how to chain multiple API calls, transform data between steps, handle errors gracefully, and build workflows that scale."
-
----
-
-## Project Structure
-
-```
-workflow-automation/
-├── README.md                    ← You are here
-├── api-monitor/
-│   ├── README.md               ← Project-specific details
-│   ├── workflow.json           ← Importable n8n workflow
-│   ├── screenshot.png          ← Visual of workflow canvas
-│   └── LESSONS_LEARNED.md      ← Reflections and insights
-└── github-issue-bot/
-    ├── README.md
-    ├── workflow.json
-    ├── screenshot.png
-    └── LESSONS_LEARNED.md
-```
-
----
-
 ## Next Steps
 
 Potential extensions for these workflows:
