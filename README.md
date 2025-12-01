@@ -43,7 +43,7 @@ I hold AWS Cloud Practitioner (CLF-C02) and Azure AI Fundamentals (AI-900) certi
 
 ## Labs & Demonstrations
 
-### Database & Backend
+### 🗄️ Database & Backend
 
 - **[Supabase RLS Enterprise Demo](./labs/supabase-rls-enterprise-demo/)** - Multi-tenant application with Row Level Security, demonstrating how I'd help customers implement secure data isolation
 
