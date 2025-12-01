@@ -131,5 +131,5 @@ Without explicit error handling, failed API calls silently stop the workflow. Co
 
 ## Related Labs
 
-- [n8n GitHub Issue Bot](../../workflow-automation/github-issue-bot/) - Similar workflow using JavaScript
-- [Pagination & Formulas](../pagination-formulas/) - Advanced Liquid template patterns
+- [n8n GitHub Issue Bot](../../n8n/github-issue-bot/) - Similar workflow using JavaScript
+- [Pagination & Formulas](../tines/pagination-formulas/) - Advanced Liquid template patterns
