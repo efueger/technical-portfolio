@@ -208,5 +208,5 @@ For production: Use Link headers when available (most robust)
 
 ## Related Labs
 
-- [GitHub Issue Monitor](../tines/github-issue-monitor/) - Uses formulas for data transformation
+- [GitHub Issue Monitor](../github-issue-monitor/) - Uses formulas for data transformation
 - [HMAC Authentication](../hmac-authentication/) - Advanced formula patterns for signatures
