@@ -1,25 +1,25 @@
 # Workflow Automation with Tines
 
-Hands-on workflow automation demos exploring API integration, data transformation, and secure authentication patterns using Tines' Liquid template-based platform.
+Hands-on workflow automation demos exploring API integration, data transformation, and secure authentication patterns using Tines' formula-based platform.
 
 ## Technologies
 
 - **Tines** - No-code workflow automation platform (Community Edition)
 - **REST APIs** - GitHub API, RequestBin for testing
-- **Liquid Templates** - Shopify's template language for data transformation
+- **Tines Formulas** - Built-in formula language for data transformation
 - **Cryptographic Authentication** - HMAC-SHA256 request signing
 
 ## Projects
 
 ### 1. GitHub Issue Monitor
 
-Event-driven workflow that monitors GitHub issues via webhook, fetches full details from GitHub API, transforms data using Liquid templates, and sends formatted alerts to Slack.
+Event-driven workflow that monitors GitHub issues via webhook, fetches full details from GitHub API, transforms data using Tines formulas, and sends formatted alerts to Slack.
 
 **What it demonstrates:**
 
 - Webhook triggers and event handling
 - REST API integration with proper headers
-- Liquid template data transformation
+- Tines formula data transformation
 - Error handling and conditional routing
 - Slack integration with formatted messages
 
@@ -28,7 +28,7 @@ Event-driven workflow that monitors GitHub issues via webhook, fetches full deta
 - Event-driven automation
 - Formula-based data extraction
 - Error detection patterns
-- Template syntax vs JavaScript
+- Formula syntax (`=action.field`) vs JavaScript
 
 [View details →](./github-issue-monitor/)
 
@@ -36,18 +36,18 @@ Event-driven workflow that monitors GitHub issues via webhook, fetches full deta
 
 ### 2. Pagination & Advanced Formulas
 
-Exploration of Liquid template patterns for data transformation and API pagination handling using the Explode action for array processing.
+Exploration of Tines formula patterns for data transformation and API pagination handling using the Explode action for array processing.
 
 **What it demonstrates:**
 
-- Advanced Liquid formulas (conditionals, date formatting, loops)
+- Advanced Tines formulas (conditionals, date formatting, loops)
 - Pagination strategies for APIs returning multiple pages
 - Explode pattern for array processing
 - Data extraction from complex JSON structures
 
 **Key concepts:**
 
-- Template language mastery
+- Formula language mastery
 - Pagination without traditional loops
 - Array processing patterns
 - Data normalization techniques
@@ -104,8 +104,8 @@ These demos use the same cryptographic patterns.
 
 Both are workflow automation tools with similar capabilities:
 
-- **n8n**: Open-source, self-hosted, code-accessible
-- **Tines**: Security/IT operations focus, Liquid templates, enterprise features
+- **n8n**: Open-source, self-hosted, JavaScript-based transformations
+- **Tines**: Security/IT operations focus, formula language, enterprise features
 
 Understanding both platforms demonstrates adaptability across different automation tools. The patterns (API orchestration, error handling, data transformation) transfer regardless of specific platform.
 
@@ -131,5 +131,5 @@ Understanding both platforms demonstrates adaptability across different automati
 
 ## Related Labs
 
-- [Workflow Automation (n8n)](../workflow-automation/) - API monitoring and GitHub automation
+- [Workflow Automation (n8n)](../n8n/api-monitor) - API monitoring and GitHub automation
 - [Supabase RLS](../supabase-rls-enterprise/) - Database-level security patterns

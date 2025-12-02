@@ -31,24 +31,39 @@ Headers:
   User-Agent: Tines-Learning-Lab
 ```
 
-### Data Transformation (Liquid Templates)
+### Data Transformation (Tines Formulas)
 
-```liquid
+**Event Transform Payload (Plain code tab):**
+
+```json
 {
-  "issue_number": "{{.get_issue_details.body.number}}",
-  "title": "{{.get_issue_details.body.title}}",
-  "author": "{{.get_issue_details.body.user.login}}",
-  "url": "{{.get_issue_details.body.html_url}}",
-  "created_at": "{{.get_issue_details.body.created_at}}",
-  "summary": "Issue #{{.get_issue_details.body.number}}: {{.get_issue_details.body.title}} by @{{.get_issue_details.body.user.login}}"
+  "issue_number": "=get_issue_details.body.number",
+  "title": "=get_issue_details.body.title",
+  "author": "=get_issue_details.body.user.login",
+  "url": "=get_issue_details.body.html_url",
+  "created_at": "=get_issue_details.body.created_at",
+  "summary": "=CONCAT('Issue #', get_issue_details.body.number, ': ', get_issue_details.body.title, ' by @', get_issue_details.body.user.login)"
 }
+```
+
+**Slack Message (text field with interpolation):**
+
+```
+🐛 New GitHub Issue #{{=format_issue_summary.body.issue_number}}
+
+Title: {{=format_issue_summary.body.title}}
+Author: @{{=format_issue_summary.body.author}}
+Created: {{=format_issue_summary.body.created_at}}
+
+View issue: {{=format_issue_summary.body.url}}
 ```
 
 **Key patterns:**
 
-- `{{.action_name.body.field}}` - Access nested JSON data
-- Formula chaining for summary generation
-- Clean data structure for downstream actions
+- **In JSON/Payload:** `"=action_name.body.field"` (equals sign, no curlies)
+- **In text fields:** `{{=action_name.body.field}}` (curlies for interpolation)
+- **Builder tab:** Click fields to auto-generate correct syntax
+- Use `CONCAT()` function for string concatenation
 
 ### Error Handling
 
@@ -65,14 +80,17 @@ Configured HTTP action to "emit events on both success and failure", then added 
 
 **Key difference:**
 
-- **Tines:** Liquid templates (declarative, JSON-based)
-- **n8n:** JavaScript functions (imperative, code-based)
+- **Tines:** Formula language with `=` prefix
+- **n8n:** JavaScript functions
 
 **Example comparison:**
 
-```liquid
-// Tines (Liquid)
-{{.api_response.body.user.email | default: "No email"}}
+```
+// Tines (in JSON payload)
+"email": "=DEFAULT(api_response.body.user.email, 'No email')"
+
+// Tines (in text field)
+Email: {{=DEFAULT(api_response.body.user.email, 'No email')}}
 
 // n8n (JavaScript)
 $json.api_response.body.user.email || "No email"
@@ -102,10 +120,10 @@ Without explicit error handling, failed API calls silently stop the workflow. Co
 
 ## Technologies
 
-- **Tines** - Workflow automation platform
+- **Tines** - Workflow automation platform with formula-based transformations
 - **GitHub API** - Issue tracking and webhooks
 - **Slack API** - Formatted messaging
-- **Liquid Templates** - Shopify's template language
+- **Tines Formulas** - Data transformation and string interpolation
 
 ---
 
@@ -113,18 +131,15 @@ Without explicit error handling, failed API calls silently stop the workflow. Co
 
 ### Screenshots
 
-- [x] **workflow-canvas.png** - Complete workflow showing all connected actions
-- [x] **events-view.png** - Successful execution with data flowing through actions
-- [x] **slack-notification.png** - Formatted Slack message with issue details
+- [ ] **workflow-canvas.png** - Complete workflow showing all connected actions
+- [ ] **events-view.png** - Successful execution with data flowing through actions
+- [ ] **slack-notification.png** - Formatted Slack message with issue details
 
-<img width="1414" height="1550" alt="workflow-canvas" src="https://github.com/user-attachments/assets/26cee7cd-a4a5-4f82-be64-d1779cfba100" />
+<img width="1414" height="1550" alt="workflow-canvas" src="https://github.com/user-attachments/assets/e11273eb-703f-4248-94ac-783986c5bfbf" />
 
+<img width="2706" height="1708" alt="events-view" src="https://github.com/user-attachments/assets/234edede-1ed5-4a1b-a20b-6970395859d1" />
 
-<img width="2706" height="1708" alt="events-view" src="https://github.com/user-attachments/assets/3c6852fb-9ee8-4434-a22d-ef06441b362b" />
-
-
-<img width="2748" height="1516" alt="slack-notification" src="https://github.com/user-attachments/assets/388de7f3-c803-4fb9-9fb6-821a2e6fb8af" />
-
+<img width="2748" height="1516" alt="slack-notification" src="https://github.com/user-attachments/assets/d6d812b0-bd72-4c25-a97f-81a1d049642a" />
 
 
 ---
@@ -132,4 +147,4 @@ Without explicit error handling, failed API calls silently stop the workflow. Co
 ## Related Labs
 
 - [n8n GitHub Issue Bot](../../n8n/github-issue-bot/) - Similar workflow using JavaScript
-- [Pagination & Formulas](../tines/pagination-formulas/) - Advanced Liquid template patterns
+- [Pagination & Formulas](../pagination-formulas/) - Advanced Liquid template patterns
