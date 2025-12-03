@@ -2,207 +2,173 @@
 
 ## Overview
 
-Exploration of Tines formula patterns for data transformation and pagination strategies for APIs that return results across multiple pages.
+Exploration of Tines formula patterns and pagination strategies for APIs that return results across multiple pages, including native pagination and Event Transform loops.
 
 ## What I Built
 
-### Part A: Formula Playground
+Two workflows demonstrating different approaches to handling paginated data:
 
-Testing environment for Tines formula patterns including conditionals, date formatting, string manipulation, and loops.
+**Loop Over Pages**: Native Tines pagination to automatically fetch multiple pages from GitHub API
 
-### Part B: Pagination Implementation
+**Loop Over Results**: Event Transform loop to iterate through array items using `LOOP.value`
 
-Workflow that fetches paginated GitHub issues and processes each issue individually using the Explode pattern.
+## Native Tines Pagination (PAGINATE)
 
-## Tines Formula Patterns
+Tines provides built-in pagination in HTTP Request actions that automatically fetches all pages.
 
-### Basic Data Access
+### Implementation
 
-```
-=action_name.body.field              # Access nested field
-=items[0].title                      # Array access
-=SIZE(items)                         # Array length
-```
-
-### Conditionals (in text fields)
-
-```
-{{#IF(status == 'active')}}
-  User is active
-{{#ELSE()}}
-  User is inactive
-{{/IF}}
-```
-
-### Date Formatting
-
-```
-=FORMAT_DATE(created_at, '%B %d, %Y')   # January 15, 2024
-=FORMAT_DATE(timestamp, '%Y-%m-%d')     # 2024-01-15
+```json
+{
+  "url": "https://api.github.com/repos/microsoft/vscode/issues",
+  "method": "get",
+  "headers": {
+    "Accept": "application/vnd.github.v3+json",
+    "User-Agent": "Tines-Lab"
+  },
+  "query_params": {
+    "state": "all",
+    "per_page": 10,
+    "page": "=PAGINATE.index + 1"
+  },
+  "pagination": {
+    "has_more": "=SIZE(PAGINATE.previous_response.body) = 10",
+    "output_as_single_event": true
+  }
+}
 ```
 
-### String Operations
+### How It Works
+
+1. First request: `PAGINATE.index` = 0, so page = 1
+2. After response, evaluates `has_more` formula
+3. If true: increments index and fetches next page
+4. Repeats until `has_more` returns false
+5. Outputs single event with all accumulated results
+
+**Key fields:**
+
+- `PAGINATE.index` - Current iteration (0, 1, 2...)
+- `PAGINATE.previous_response.body` - Last API response
+- `has_more` - Formula determining if more pages exist
+- `output_as_single_event: true` - Combines all pages into one event
+
+## Event Transform Loops (LOOP)
+
+Event Transform actions can loop over arrays using the Loop field.
+
+### Implementation
+
+**Event Transform Configuration:**
+
+Mode: Message only
+Loop: `=generate_page_numbers.body` (references array like `[1, 2, 3, 4, 5]`)
+
+**Payload:**
+
+```json
+{
+  "page": "=LOOP.value",
+  "repo": "=initialize_variables.body.repo"
+}
+```
+
+**Result:** Creates 5 separate events, one for each array element
+
+### Loop Variables
+
+- `LOOP.value` - Current item in the array
+- `LOOP.index` - Current position (0, 1, 2...)
+- `LOOP.key` - For objects, the current key
+
+## Additional Patterns
+
+**Explode Action**: Alternative to loops for processing array items. Creates one event per array element. Useful when you want to process items in parallel or route them differently based on content.
+
+**CONCAT Function**: Merges multiple arrays together. Syntax: `=CONCAT(array1, array2)`. Used when accumulating results across multiple operations.
+
+## Tines Formula Syntax
+
+### Basic Formulas
 
 ```
-=UPCASE(email)                      # EMILY@EXAMPLE.COM
-=DOWNCASE(text)                     # lowercase
-=DEFAULT(field, 'N/A')             # Default if empty
+=action_name.body.field         # Access data
+=SIZE(array)                    # Array length
+=PAGINATE.index                 # Pagination counter
+=LOOP.value                     # Current loop item
 ```
 
 ### Math Operations
 
 ```
-=MULTIPLY(price, quantity)          # Multiplication
-=ADD(total, 5)                      # Addition
-=SUBTRACT(count, 1)                 # Subtraction
+=field + 1                      # Addition
+=field - 1                      # Subtraction
+=price * quantity               # Multiplication
 ```
 
-### Loops (in text fields)
+### Conditionals
 
 ```
-{{#EACH(items)}}
-  {{=item.name}}{{#UNLESS(last)}}, {{/UNLESS}}
-{{/EACH}}
+=SIZE(array) = 10               # Equality
+=SIZE(array) > 0                # Greater than
+=field != null                  # Not equal
 ```
 
-## Pagination Strategies
-
-### The Problem
-
-APIs limit response sizes (e.g., GitHub returns 30 issues per page). To get all results:
-
-1. Make initial request with `?page=1&per_page=10`
-2. Check if more results exist
-3. Fetch subsequent pages
-4. Continue until complete
-
-### Three Approaches
-
-**1. Fixed Iterations**  
-If you know dataset size (e.g., ≤100 items = 10 pages max)
-
-**2. Check for Empty Response**  
-Keep fetching until API returns empty array
-
-**3. Use Link Headers**  
-GitHub provides `rel="next"` in response headers when more pages exist (most robust)
-
-## The Explode Pattern
-
-**Traditional approach:** Loop through array items sequentially
-
-**Tines approach:** Explode action creates one event per array item
+### Common Functions
 
 ```
-API returns: [issue1, issue2, issue3]
-       ↓ Explode
-Creates: event1(issue1), event2(issue2), event3(issue3)
+=SIZE(array)                    # Array length
+=DEFAULT(field, 'fallback')     # Default value
+=CONCAT(array1, array2)         # Merge arrays
+=UPCASE(text)                   # Uppercase
+=DOWNCASE(text)                 # Lowercase
 ```
-
-**Why use Explode:**
-
-- Process items in parallel
-- Each item can follow different workflow path
-- One item failing doesn't stop others
-- More efficient than sequential loops
-
-### Implementation
-
-```
-Initialize Variables → Fetch Issues (page 1) → Explode Array → Process Each Issue
-```
-
-Each issue becomes separate event that can be processed independently.
 
 ## Key Learnings
 
-### 1. Explode vs Traditional Loops
+### 1. Native Pagination vs Event Transform Loops
 
-Coming from programming background, I initially tried traditional while loops. Tines doesn't use loops - it uses Explode for array processing.
+**Native pagination** (PAGINATE): Best for fetching all pages from an API automatically. Tines handles the iteration and accumulation.
 
-**Benefits:**
+**Event Transform loops** (LOOP): Best for iterating over a known array when you need to perform actions for each item.
 
-- No loop counter management
-- Parallel processing
-- Cleaner error handling
-- More intuitive visual representation
+### 2. Formula Syntax Rules
 
-### 2. Formula Debugging
+- In JSON payloads: use `=` prefix for formulas
+- No curly braces in formulas
+- Use formula builder (click fields) to insert formula chips
+- `SIZE()` for array length (not LENGTH or .length)
 
-When formulas don't resolve (show as `{{.action.field}}`):
+### 3. API Behavior Varies
 
-- Check action names match (display name vs slug)
-- Verify actions connected on canvas
-- Test with simple formula first (`{{.action.body}}`)
-- Use autocomplete (type `{{.` and wait)
-
-### 3. Pagination Strategy Selection
-
-**Choose based on:**
-
-- Dataset growth expectations
-- API capabilities (provides total_pages? Link headers?)
-- Performance requirements
-- Error handling needs
-
-For production: Use Link headers when available (most robust)
+Not all APIs handle pagination parameters the same way. GitHub respects `page` and `per_page` parameters correctly. Always test pagination with the specific API you're working with.
 
 ## Real-World Applications
 
-**Data Migration:** Sync 5,000 users from old API to new platform (100/page = 50 pages)
+**Data Migration**: Sync 5,000 users from old API to new platform (100/page = 50 pages). Use native pagination to fetch all automatically.
 
-**Compliance Reporting:** Monthly report of all GitHub PRs with review status
+**Compliance Reporting**: Monthly report of all GitHub PRs with review status. Fetch all PRs with pagination, extract relevant fields.
 
-**"Missing Data" Debugging:** Customer says "workflow only processed 30 items but I have 500" - pagination not implemented
-
-## Tines Formula Quick Reference
-
-**In JSON payloads (Plain code tab):**
-
-```
-"field": "=action_name.body.field"
-"field": "=DEFAULT(field, 'N/A')"
-"field": "=UPCASE(text)"
-"field": "=FORMAT_DATE(timestamp, '%Y-%m-%d')"
-"field": "=SIZE(array)"
-"field": "=ADD(num, 5)"
-```
-
-**In text fields (for string interpolation):**
-
-```
-{{=action_name.body.field}}
-{{=DEFAULT(field, 'N/A')}}
-{{#IF(condition)}}...{{#ELSE()}}...{{/IF}}
-{{#EACH(array)}}{{=item.field}}{{/EACH}}
-```
-
-**Common functions:**
-
-- `DEFAULT(value, fallback)` - Default if empty
-- `UPCASE(text)` / `DOWNCASE(text)` - Case conversion
-- `FORMAT_DATE(date, format)` - Date formatting
-- `SIZE(array)` - Array/string length
-- `ADD()` / `SUBTRACT()` / `MULTIPLY()` - Math operations
-- `CONCAT()` - String concatenation
+**Debugging "Missing Data"**: Customer reports incomplete sync. Check if pagination is configured and `has_more` formula is correct.
 
 ## Technologies
 
-- **Tines** - Workflow automation platform with formula language
-- **Tines Formulas** - Data transformation syntax (not Liquid/Shopify)
-- **GitHub API** - Pagination examples
-- **Explode Pattern** - Array processing
+- **Tines** - Workflow automation with native pagination
+- **GitHub API** - Paginated REST API
+- **Tines Formulas** - Data transformation and loop control
+- **PAGINATE object** - Built-in pagination context
+- **LOOP object** - Event Transform loop context
 
 ---
 
 ## Artifacts
 
+### Screenshot
 
-## Screenshots to Add
+- **pagination-results.png** - Workflows showing both pagination and loop patterns with results
 
-- [ ] **formula-playground.png** - Various formula patterns with test data and outputs
-- [ ] **pagination-workflow.png** - Workflow showing Initialize → Fetch → Explode → Process
-- [ ] **explode-events.png** - Events view showing multiple events from single array
+<img width="3004" height="1708" alt="Loops and pagination" src="https://github.com/user-attachments/assets/56a087fa-259f-4619-ac2a-7a2ebc37f6b6" />
+
 
 ---
 
