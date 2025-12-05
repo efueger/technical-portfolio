@@ -163,12 +163,19 @@ kubectl port-forward deployment/nginx-deployment 8080:80
 
 ### Screenshots
 
-- **docker-containers-running.png** - Terminal showing deployment scaled to 3 replicas, pod deletion, automatic replacement
-- **scale-and-self-healing.png** - Terminal showing deployment scaled to 3 replicas, pod deletion, automatic replacement
-- **debug-imagepull.png** - kubectl describe output showing ImagePullBackOff Events and diagnostic information
+- **docker-desktop-containers-running.png** - Docker Desktop showing containers running
+- **docker-containers-running-self-healing.png** - Terminal showing deployment scaled to 3 replicas, pod deletion, automatic replacement
+- **broken-container-details-logs.png** - kubectl describe output showing ImagePullBackOff Events and diagnostic information
 - **kubernetes-api.png** - curl output from Kubernetes API showing JSON pod list
 
 <img width="2574" height="1560" alt="docker-containers-running" src="https://github.com/user-attachments/assets/7451457b-7bfe-4881-bdca-9a1ab3abe052" />
+
+<img width="1298" height="586" alt="docker-containers-running-self-healing" src="https://github.com/user-attachments/assets/bb36c5a5-bb8c-4ce0-bc5e-b8e291074796" />
+
+<img width="2152" height="2884" alt="broken-container-details-logs" src="https://github.com/user-attachments/assets/6d99eb74-0283-40cf-9ee1-b96d0ac2c325" />
+
+<img width="1612" height="1304" alt="kubernetes-api" src="https://github.com/user-attachments/assets/1c6ca55e-c910-4f92-992d-25f65f369607" />
+
 
 
 ---
