@@ -179,11 +179,18 @@ Most common issue: User authenticates successfully but sees no data. Root cause:
 - **rls-policies-config** - Supabase Policies page showing SELECT policies configured for all three tables
 - **data-isolation-tests** - API test results showing different users receiving only their organization's data
 
+<img width="3014" height="895" alt="supabase - tables" src="https://github.com/user-attachments/assets/1226f018-7711-461a-a77d-1a07efb909d7" />
+
+<img width="1351" height="828" alt="RLS - org and project tables" src="https://github.com/user-attachments/assets/6fc0048c-bf3b-48ec-8a1f-d01840b529e9" />
+
+<img width="2320" height="1414" alt="RLS - user 1" src="https://github.com/user-attachments/assets/db717655-5b88-4200-96cb-7b4c3e65666a" />
+
+<img width="2382" height="1318" alt="RLS - user 2" src="https://github.com/user-attachments/assets/f749c59a-09d3-45b6-a332-cb6620838df0" />
 
 
 ---
 
 ## Related Labs
 
-- [Kubernetes](../kubernetes/) - Container orchestration and debugging
-- [Workflow Automation](../workflow-automation/) - Event-driven automation and API integration
+- [Kubernetes](../../kubernetes/) - Container orchestration and debugging
+- [Workflow Automation](../../workflow-automation/) - Event-driven automation and API integration
