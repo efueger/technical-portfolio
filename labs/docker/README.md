@@ -174,9 +174,11 @@ docker exec env-success env | grep -E 'API_KEY|DB_HOST'
 2. `docker inspect <container> | grep -A 20 Env` - Verify env vars are set
 3. `docker exec <container> env` - Inspect environment inside running container
 
-**[SCREENSHOT PLACEHOLDER: env-fail-logs.png - docker logs showing missing env var errors]**
+<img width="2676" height="102" alt="lab-03-env-fail-logs" src="https://github.com/user-attachments/assets/9d557cfe-3076-4f37-b5ec-ebd0d3717705" />
 
-**[SCREENSHOT PLACEHOLDER: env-success-running.png - docker ps showing env-success container Up status]**
+
+<img width="2680" height="474" alt="lab-03-env-success-running" src="https://github.com/user-attachments/assets/7b2fdeee-c88e-4ea2-8ff3-f961351c8449" />
+
 
 ### Lab 4: Volume Mount Issues
 
@@ -208,9 +210,10 @@ docker volume ls  # Shows orphaned volume
 3. `docker volume ls` - Identify orphaned volumes from incorrect mounts
 4. Verify host directory permissions allow container user access
 
-**[SCREENSHOT PLACEHOLDER: volume-mount-success.png - docker exec showing host file accessible in container]**
+<img width="2676" height="550" alt="lab-04-volume-mount-success" src="https://github.com/user-attachments/assets/f957a36e-bb14-4c6f-95d3-1a777aff5d9a" />
 
-**[SCREENSHOT PLACEHOLDER: volume-ls-orphaned.png - docker volume ls showing unintended volume creation]**
+
+
 
 ### Lab 5: Debugging Running Containers
 
@@ -251,9 +254,11 @@ docker exec debug-demo wget -O- localhost
 - Inspect logs and configuration files
 - Debug environment variables and paths
 
-**[SCREENSHOT PLACEHOLDER: docker-exec-ps.png - docker exec showing running processes inside container]**
+<img width="2672" height="680" alt="lab-05-docker-exec-ps" src="https://github.com/user-attachments/assets/7cf9f033-3591-4483-8501-40405f23498c" />
 
-**[SCREENSHOT PLACEHOLDER: docker-exec-files.png - docker exec showing nginx config file contents]**
+
+<img width="2672" height="402" alt="lab-05-docker-exec-files" src="https://github.com/user-attachments/assets/c4e8e9ac-9aa6-4e7d-ba72-30d4724ddfcd" />
+
 
 ## Technologies
 
